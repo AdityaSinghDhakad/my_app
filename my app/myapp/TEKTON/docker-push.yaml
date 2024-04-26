@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: docker-push
+spec:
+  inputs:
+    params:
+      - name: imageName
+        description: The name of the image to push
+        type: string
+  steps:
+    - name: push-image
+      image: docker
+      script: |
+        docker push $(inputs.params.imageName)

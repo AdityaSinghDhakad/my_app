@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: sample-pipeline
+spec:
+  tasks:
+    - name: download-source
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: https://github.com/yourusername/sample-project.git
+    - name: build-image
+      taskRef:
+        name: buildah-task
+      params:
+        - name: imageName
+          value: yourdockerhubusername/sample-image
+    - name: push-to-dockerhub
+      taskRef:
+        name: docker-push
+      params:
+        - name: imageName
+          value: yourdockerhubusername/sample-image
